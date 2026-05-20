@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Pescespada Beach Club — Scalea, Calabria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+/* ─── TOKENS ─── */
+:root {
+  --sand:     #F5ECD7;
+  --sand-d:   #EBD9B8;
+  --cream:    #FAFAF5;
+  --ocean:    #0C3347;
+  --ocean-m:  #1A5070;
+  --ocean-l:  #2A7090;
+  --sunset:   #C96B3A;
+  --sunset-l: #E88A56;
+  --gold:     #C4915A;
+  --text:     #1A1410;
+  --muted:    #7A6E60;
+  --white:    #FFFFFF;
+  --font-d: 'Playfair Display', Georgia, serif;
+  --font-b: 'DM Sans', system-ui, sans-serif;
+  --ease:   cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--cream);
+  color: var(--text);
+  font-family: var(--font-b);
+  font-weight: 400;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; width: 100%; height: 100%; object-fit: cover; }
+a { color: inherit; text-decoration: none; }
+
+/* ─── GRAIN ─── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.35;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 800;
+  padding: 1.5rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.5s var(--ease), padding 0.4s var(--ease), box-shadow 0.4s;
+}
+nav.scrolled {
+  background: rgba(250, 250, 245, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 1rem 3rem;
+  box-shadow: 0 1px 0 rgba(26, 20, 16, 0.08);
+}
+.nav-logo {
+  font-family: var(--font-d);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--white);
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  transition: color 0.4s;
+}
+nav.scrolled .nav-logo { color: var(--ocean); }
+.nav-logo span { display: block; font-family: var(--font-b); font-size: 0.62rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.75; margin-top: 1px; }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+  transition: color 0.3s;
+}
+nav.scrolled .nav-links a { color: var(--muted); }
+.nav-links a:hover { color: var(--sunset-l); }
+nav.scrolled .nav-links a:hover { color: var(--sunset); }
+.nav-cta {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.65rem 1.6rem;
+  border: 1.5px solid rgba(255,255,255,0.5);
+  color: var(--white);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+.nav-cta:hover { background: var(--white); color: var(--ocean); border-color: var(--white); }
+nav.scrolled .nav-cta { border-color: var(--ocean); color: var(--ocean); }
+nav.scrolled .nav-cta:hover { background: var(--ocean); color: var(--white); }
+
+/* ─── HERO ─── */
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 620px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 3rem 5rem;
+}
+
+/* Slideshow */
+.hero-slides { position: absolute; inset: 0; }
+.hero-slide {
+  position: absolute; inset: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+.hero-slide.active { opacity: 1; }
+.hero-slide img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  will-change: transform;
+  animation: kenburns 9s var(--ease-out) forwards;
+}
+@keyframes kenburns {
+  from { transform: scale(1.08) translate(-1%, 1%); }
+  to   { transform: scale(1) translate(0, 0); }
+}
+.hero-slide:nth-child(2) img { animation-name: kenburns2; }
+@keyframes kenburns2 {
+  from { transform: scale(1.06) translate(1%, 0); }
+  to   { transform: scale(1) translate(0, 0); }
+}
+.hero-slide:nth-child(3) img { animation-name: kenburns3; }
+@keyframes kenburns3 {
+  from { transform: scale(1.1) translate(0, -1%); }
+  to   { transform: scale(1) translate(0, 0); }
+}
+
+/* Gradient overlays */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(to top, rgba(10, 25, 37, 0.85) 0%, rgba(10, 25, 37, 0.3) 40%, rgba(10, 25, 37, 0.1) 70%, transparent 100%),
+    linear-gradient(to bottom, rgba(10,25,37,0.35) 0%, transparent 30%);
+}
+
+/* Slide dots */
+.hero-dots {
+  position: absolute;
+  bottom: 2rem; right: 3rem;
+  z-index: 10;
+  display: flex; gap: 0.5rem;
+}
+.hero-dot {
+  width: 28px; height: 2px;
+  background: rgba(255,255,255,0.35);
+  cursor: pointer;
+  transition: background 0.3s, width 0.3s;
+}
+.hero-dot.active { background: var(--white); width: 44px; }
+
+.hero-content {
+  position: relative;
+  z-index: 5;
+  max-width: 720px;
+}
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-b);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sunset-l);
+  margin-bottom: 1.2rem;
+}
+.hero-tag::before {
+  content: '';
+  display: block;
+  width: 28px; height: 1px;
+  background: var(--sunset-l);
+}
+.hero-h1 {
+  font-family: var(--font-d);
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 400;
+  color: var(--white);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.4rem;
+}
+.hero-h1 em {
+  font-style: italic;
+  color: rgba(255,255,255,0.75);
+}
+.hero-sub {
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.65;
+  max-width: 420px;
+  margin-bottom: 2.4rem;
+}
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 1rem 2.2rem;
+  background: var(--sunset);
+  color: var(--white);
+  border-radius: 2px;
+  transition: background 0.3s, transform 0.2s;
+}
+.btn-primary:hover { background: var(--sunset-l); transform: translateY(-1px); }
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 1rem 2.2rem;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  color: var(--white);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+.btn-ghost:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.7); }
+
+/* Scroll indicator */
+.scroll-hint {
+  position: absolute;
+  bottom: 2.5rem; left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  color: rgba(255,255,255,0.45);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.scroll-hint-line {
+  width: 1px; height: 40px;
+  background: rgba(255,255,255,0.25);
+  position: relative;
+  overflow: hidden;
+}
+.scroll-hint-line::after {
+  content: '';
+  position: absolute;
+  top: -100%; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(255,255,255,0.7);
+  animation: scroll-drop 1.8s ease-in-out infinite;
+}
+@keyframes scroll-drop {
+  0%   { top: -100%; }
+  100% { top: 200%; }
+}
+
+/* ─── SECTION BASE ─── */
+section { padding: 7rem 3rem; }
+.section-tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sunset);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.section-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--sunset); }
+.section-h2 {
+  font-family: var(--font-d);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+.section-body {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 560px;
+}
+
+/* ─── REVEAL ANIMATIONS ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+.reveal.in-view { opacity: 1; transform: none; }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.45s; }
+
+/* ─── ABOUT ─── */
+.about {
+  background: var(--ocean);
+  color: var(--white);
+  padding: 7rem 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+}
+.about .section-tag { color: var(--sunset-l); }
+.about .section-tag::before { background: var(--sunset-l); }
+.about .section-h2 { color: var(--white); margin-bottom: 1.5rem; }
+.about .section-body { color: rgba(255,255,255,0.65); max-width: 460px; }
+.about-body-2 {
+  color: rgba(255,255,255,0.65);
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.8;
+  margin-top: 1.2rem;
+}
+.about-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  margin-top: 3rem;
+}
+.about-stat {
+  padding: 1.6rem 2rem 1.6rem 0;
+  border-top: 1px solid rgba(255,255,255,0.12);
+}
+.about-stat:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.12); }
+.about-stat-n {
+  font-family: var(--font-d);
+  font-size: 2.6rem;
+  font-weight: 400;
+  color: var(--sunset-l);
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+.about-stat-l {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
+.about-media {
+  position: relative;
+  height: 520px;
+}
+.about-img-main {
+  position: absolute;
+  top: 0; right: 0;
+  width: 78%;
+  height: 82%;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.about-img-accent {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 52%;
+  height: 52%;
+  border-radius: 2px;
+  overflow: hidden;
+  border: 4px solid var(--ocean);
+}
+.about-badge {
+  position: absolute;
+  top: 48%; right: 55%;
+  background: var(--sunset);
+  color: var(--white);
+  padding: 1rem 1.2rem;
+  text-align: center;
+  z-index: 2;
+  border-radius: 2px;
+}
+.about-badge-n { font-family: var(--font-d); font-size: 1.6rem; font-weight: 500; line-height: 1; }
+.about-badge-l { font-size: 0.58rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.85; margin-top: 2px; }
+
+/* ─── GALLERY ─── */
+.gallery { background: var(--sand); padding: 7rem 3rem; }
+.gallery-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 3.5rem;
+}
+.gallery-link {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ocean);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: gap 0.3s;
+}
+.gallery-link:hover { gap: 0.9rem; }
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto;
+  gap: 0.8rem;
+}
+.g-item {
+  overflow: hidden;
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+}
+.g-item img {
+  transition: transform 0.7s var(--ease-out);
+  will-change: transform;
+}
+.g-item:hover img { transform: scale(1.04); }
+.g-item-overlay {
+  position: absolute; inset: 0;
+  background: rgba(10,25,37,0);
+  transition: background 0.4s;
+  display: flex;
+  align-items: flex-end;
+  padding: 1.2rem;
+}
+.g-item:hover .g-item-overlay { background: rgba(10,25,37,0.35); }
+.g-item-ig {
+  opacity: 0;
+  transition: opacity 0.3s;
+  color: var(--white);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.g-item:hover .g-item-ig { opacity: 1; }
+
+/* Grid layout */
+.g-item:nth-child(1) { grid-column: 1 / 6;  grid-row: 1; aspect-ratio: 4/3; }
+.g-item:nth-child(2) { grid-column: 6 / 9;  grid-row: 1; aspect-ratio: 3/4; }
+.g-item:nth-child(3) { grid-column: 9 / 13; grid-row: 1; aspect-ratio: 4/3; }
+.g-item:nth-child(4) { grid-column: 1 / 4;  grid-row: 2; aspect-ratio: 1; }
+.g-item:nth-child(5) { grid-column: 4 / 9;  grid-row: 2; aspect-ratio: 16/9; }
+.g-item:nth-child(6) { grid-column: 9 / 13; grid-row: 2; aspect-ratio: 1; }
+
+/* ─── SERVICES ─── */
+.services { padding: 7rem 3rem; background: var(--cream); }
+.services-head { margin-bottom: 4rem; }
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+.service-card {
+  padding: 2.5rem 2rem;
+  border: 1px solid var(--sand-d);
+  border-radius: 2px;
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+.service-card:hover {
+  border-color: var(--sunset);
+  box-shadow: 0 8px 40px rgba(201, 107, 58, 0.1);
+  transform: translateY(-4px);
+}
+.service-icon {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+.service-name {
+  font-family: var(--font-d);
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin-bottom: 0.8rem;
+  color: var(--ocean);
+}
+.service-desc {
+  font-size: 0.88rem;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+/* ─── CINEMATIC SPLIT ─── */
+.cinematic {
+  position: relative;
+  height: 65vh;
+  min-height: 440px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.cinematic-bg {
+  position: absolute; inset: 0;
+  overflow: hidden;
+}
+.cinematic-bg img {
+  transition: transform 0.1s linear;
+  will-change: transform;
+}
+.cinematic::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(to right, rgba(10,25,37,0.85) 0%, rgba(10,25,37,0.4) 60%, rgba(10,25,37,0.1) 100%);
+}
+.cinematic-content {
+  position: relative; z-index: 3;
+  padding: 0 3rem;
+  max-width: 600px;
+}
+.cinematic-quote {
+  font-family: var(--font-d);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--white);
+  line-height: 1.3;
+  margin-bottom: 1.5rem;
+}
+.cinematic-attr {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sunset-l);
+}
+
+/* ─── EVENTS ─── */
+.events { padding: 7rem 3rem; background: var(--sand); }
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 3.5rem;
+}
+.event-card {
+  background: var(--white);
+  border-radius: 2px;
+  overflow: hidden;
+  transition: transform 0.4s var(--ease-out), box-shadow 0.4s;
+}
+.event-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(10,25,37,0.12);
+}
+.event-img { height: 220px; overflow: hidden; }
+.event-img img { transition: transform 0.6s var(--ease-out); }
+.event-card:hover .event-img img { transform: scale(1.05); }
+.event-body { padding: 1.8rem; }
+.event-tag {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sunset);
+  margin-bottom: 0.7rem;
+}
+.event-name {
+  font-family: var(--font-d);
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--ocean);
+  margin-bottom: 0.8rem;
+  line-height: 1.3;
+}
+.event-desc {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ─── INFO BAR ─── */
+.info-bar {
+  background: var(--ocean);
+  padding: 5rem 3rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.info-item { color: var(--white); }
+.info-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sunset-l);
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.info-label::before { content: ''; display: block; width: 18px; height: 1px; background: var(--sunset-l); }
+.info-value {
+  font-family: var(--font-d);
+  font-size: 1.15rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+.info-sub {
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: rgba(255,255,255,0.5);
+  margin-top: 0.5rem;
+  line-height: 1.6;
+}
+
+/* ─── CTA BANNER ─── */
+.cta-banner {
+  background: var(--sunset);
+  padding: 5rem 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-banner::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.08) 0%, transparent 70%);
+}
+.cta-banner-title {
+  font-family: var(--font-d);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--white);
+  margin-bottom: 1rem;
+  position: relative;
+}
+.cta-banner-sub {
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+.btn-cta-white {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.1rem 2.8rem;
+  background: var(--white);
+  color: var(--sunset);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+.btn-cta-white:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.15); }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--ocean);
+  color: rgba(255,255,255,0.45);
+  padding: 3rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 400;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.footer-logo {
+  font-family: var(--font-d);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--white);
+}
+.footer-links { display: flex; gap: 2rem; list-style: none; }
+.footer-links a { transition: color 0.2s; }
+.footer-links a:hover { color: var(--sunset-l); }
+
+/* ─── LIGHTBOX ─── */
+.lb {
+  position: fixed; inset: 0;
+  background: rgba(10,25,37,0.97);
+  z-index: 9100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s;
+}
+.lb.open { opacity: 1; pointer-events: all; }
+.lb-img { max-width: 90vw; max-height: 90vh; width: auto; height: auto; border-radius: 2px; }
+.lb-close {
+  position: absolute;
+  top: 2rem; right: 2rem;
+  color: rgba(255,255,255,0.7);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.2s;
+  background: none; border: none;
+  width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+}
+.lb-close:hover { color: var(--white); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  nav { padding: 1.2rem 2rem; }
+  nav.scrolled { padding: 0.9rem 2rem; }
+  section { padding: 5rem 2rem; }
+  .about { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 2rem; }
+  .about-media { height: 360px; }
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .events-grid { grid-template-columns: repeat(2, 1fr); }
+  .info-bar { grid-template-columns: 1fr; gap: 2rem; padding: 4rem 2rem; }
+  .gallery { padding: 5rem 2rem; }
+}
+@media (max-width: 768px) {
+  .nav-links, .nav-cta { display: none; }
+  .hero { padding: 0 1.5rem 4rem; }
+  .hero-h1 { font-size: 2.8rem; }
+  section { padding: 4rem 1.5rem; }
+  .about { padding: 4rem 1.5rem; }
+  .gallery { padding: 4rem 1.5rem; }
+  .gallery-grid { grid-template-columns: 1fr 1fr; }
+  .g-item:nth-child(1),
+  .g-item:nth-child(2),
+  .g-item:nth-child(3),
+  .g-item:nth-child(4),
+  .g-item:nth-child(5),
+  .g-item:nth-child(6) { grid-column: auto; grid-row: auto; aspect-ratio: 1; }
+  .services-grid { grid-template-columns: 1fr; }
+  .events-grid { grid-template-columns: 1fr; }
+  .info-bar { padding: 3rem 1.5rem; }
+  footer { flex-direction: column; gap: 1.5rem; text-align: center; padding: 2.5rem 1.5rem; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">
+    Il Pescespada<span>Beach Club · Scalea CS</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">Storia</a></li>
+    <li><a href="#gallery">Galleria</a></li>
+    <li><a href="#services">Servizi</a></li>
+    <li><a href="#eventi">Eventi</a></li>
+  </ul>
+  <a href="https://www.instagram.com/ilpescespada/" target="_blank" rel="noopener" class="nav-cta">Prenota →</a>
+</nav>
+
+<!-- HERO SLIDESHOW -->
+<section class="hero" aria-label="Hero">
+  <div class="hero-slides">
+    <div class="hero-slide active">
+      <img src="img/sunset1.jpg" alt="Tramonto al Pescespada Beach Club" loading="eager">
+    </div>
+    <div class="hero-slide">
+      <img src="img/hero3.jpg" alt="Il Pescespada Beach Club — Scalea" loading="lazy">
+    </div>
+    <div class="hero-slide">
+      <img src="img/season1.jpg" alt="Estate al Pescespada" loading="lazy">
+    </div>
+  </div>
+
+  <div class="hero-content">
+    <p class="hero-tag">Scalea · Calabria · Dal 1980</p>
+    <h1 class="hero-h1">Il tuo posto<br>sotto <em>il sole</em></h1>
+    <p class="hero-sub">Beach club, aperitivi, cucina di mare e musica dal vivo sul litorale di Scalea. Perché l'estate si vive, non si aspetta.</p>
+    <div class="hero-actions">
+      <a href="#gallery" class="btn-primary">Scopri di più</a>
+      <a href="https://www.instagram.com/ilpescespada/" target="_blank" rel="noopener" class="btn-ghost">@ilpescespada ↗</a>
+    </div>
+  </div>
+
+  <div class="hero-dots">
+    <div class="hero-dot active" data-slide="0"></div>
+    <div class="hero-dot" data-slide="1"></div>
+    <div class="hero-dot" data-slide="2"></div>
+  </div>
+
+  <div class="scroll-hint" aria-hidden="true">
+    <div class="scroll-hint-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div>
+    <p class="section-tag reveal">La nostra storia</p>
+    <h2 class="section-h2 reveal reveal-delay-1">Un'estate che<br>non finisce mai</h2>
+    <p class="section-body reveal reveal-delay-2" style="margin-top:1.2rem;">
+      Siamo il punto di riferimento della riviera dei Cedri. Un angolo dove il Tirreno si incontra con buona musica, drink curati e il calore autentico calabrese.
+    </p>
+    <p class="about-body-2 reveal reveal-delay-2">
+      Dalla spiaggia all'aperitivo, dalla cucina di Simo fino alle notti con DJ set e live music: al Pescespada trovi tutto quello di cui hai bisogno per vivere l'estate come si deve. Eco e cool, plastic free per amore del nostro mare.
+    </p>
+    <div class="about-stats reveal reveal-delay-3">
+      <div class="about-stat">
+        <div class="about-stat-n">40+</div>
+        <div class="about-stat-l">Anni di storia</div>
+      </div>
+      <div class="about-stat" style="padding-left:2rem;">
+        <div class="about-stat-n">∞</div>
+        <div class="about-stat-l">Tramonti vissuti</div>
+      </div>
+      <div class="about-stat">
+        <div class="about-stat-n">100%</div>
+        <div class="about-stat-l">Plastic free</div>
+      </div>
+      <div class="about-stat" style="padding-left:2rem;">
+        <div class="about-stat-n">6K+</div>
+        <div class="about-stat-l">Follower Instagram</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-media reveal reveal-delay-2">
+    <div class="about-img-main">
+      <img src="img/sunset3.jpg" alt="Aperitivo al tramonto">
+    </div>
+    <div class="about-img-accent">
+      <img src="img/ape2.jpg" alt="Drink al Pescespada">
+    </div>
+    <div class="about-badge">
+      <div class="about-badge-n">🐟🗡️</div>
+      <div class="about-badge-l">Since 1980</div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="gallery-head reveal">
+    <div>
+      <p class="section-tag">Instagram · @ilpescespada</p>
+      <h2 class="section-h2">La nostra estate,<br>in immagini</h2>
+    </div>
+    <a href="https://www.instagram.com/ilpescespada/" target="_blank" rel="noopener" class="gallery-link">
+      Vedi tutto →
+    </a>
+  </div>
+  <div class="gallery-grid reveal reveal-delay-1">
+    <div class="g-item" onclick="openLb(this)">
+      <img src="img/sunset1.jpg" alt="Tramonto sul mare">
+      <div class="g-item-overlay"><span class="g-item-ig">↗ Instagram</span></div>
+    </div>
+    <div class="g-item" onclick="openLb(this)">
+      <img src="img/hero1.jpg" alt="Il Pescespada Beach Club">
+      <div class="g-item-overlay"><span class="g-item-ig">↗ Instagram</span></div>
+    </div>
+    <div class="g-item" onclick="openLb(this)">
+      <img src="img/season2.jpg" alt="Estate al Pescespada">
+      <div class="g-item-overlay"><span class="g-item-ig">↗ Instagram</span></div>
+    </div>
+    <div class="g-item" onclick="openLb(this)">
+      <img src="img/tarantella1.jpg" alt="Tramonto tarantella">
+      <div class="g-item-overlay"><span class="g-item-ig">↗ Instagram</span></div>
+    </div>
+    <div class="g-item" onclick="openLb(this)">
+      <img src="img/ape1.jpg" alt="Aperitivo vista mare">
+      <div class="g-item-overlay"><span class="g-item-ig">↗ Instagram</span></div>
+    </div>
+    <div class="g-item" onclick="openLb(this)">
+      <img src="img/weekend1.jpg" alt="Weekend al Pescespada">
+      <div class="g-item-overlay"><span class="g-item-ig">↗ Instagram</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-head">
+    <p class="section-tag reveal">Quello che offriamo</p>
+    <h2 class="section-h2 reveal reveal-delay-1">Tutto per la tua estate</h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal reveal-delay-1">
+      <span class="service-icon">🏖️</span>
+      <div class="service-name">Servizio Spiaggia</div>
+      <p class="service-desc">Ombrelloni, lettini, docce e cabine su uno dei tratti di costa più belli della Riviera dei Cedri. Prenotazione in DM.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <span class="service-icon">🍹</span>
+      <div class="service-name">Bar & Aperitivi</div>
+      <p class="service-desc">Cocktail artigianali, drink signature e aperitivi al tramonto. Partner ufficiali Espolón Tequila. Plastic free, sempre.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <span class="service-icon">🍴</span>
+      <div class="service-name">La Cucina della Simo</div>
+      <p class="service-desc">Pranzi freschi e creativi a cura di @lacucinadellasimo. Dal mare alla tavola, ogni giorno. Anche per eventi privati.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-4">
+      <span class="service-icon">🎵</span>
+      <div class="service-name">Musica & Serate</div>
+      <p class="service-desc">DJ set, live music e afterdinner. Dal tramonto alla notte, il Pescespada è il posto dove stare d'estate a Scalea.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CINEMATIC PARALLAX -->
+<div class="cinematic">
+  <div class="cinematic-bg" id="parallaxBg">
+    <img src="img/tarantella2.jpg" alt="Tramonto al Pescespada">
+  </div>
+  <div class="cinematic-content">
+    <blockquote class="cinematic-quote">"Come ogni anno custodiremo con cura tutte le emozioni che sono passate di qui."</blockquote>
+    <p class="cinematic-attr">— Il Pescespada, estate 2025</p>
+  </div>
+</div>
+
+<!-- EVENTS -->
+<section class="events" id="eventi">
+  <div>
+    <p class="section-tag reveal">Appuntamenti</p>
+    <h2 class="section-h2 reveal reveal-delay-1">Estate 2025 —<br>Prossimi eventi</h2>
+  </div>
+  <div class="events-grid">
+    <div class="event-card reveal reveal-delay-1">
+      <div class="event-img">
+        <img src="img/ape1.jpg" alt="Paloma Weekend">
+      </div>
+      <div class="event-body">
+        <p class="event-tag">22–24 Maggio · Scalea</p>
+        <h3 class="event-name">Paloma Weekend</h3>
+        <p class="event-desc">Un intero weekend dedicato al Paloma con Espolón Tequila. Gadget ufficiali in palio, drink speciali e musica dal tramonto.</p>
+      </div>
+    </div>
+    <div class="event-card reveal reveal-delay-2">
+      <div class="event-img">
+        <img src="img/tarantella1.jpg" alt="Tarantella Sunset">
+      </div>
+      <div class="event-body">
+        <p class="event-tag">Ogni domenica · dalle 18:00</p>
+        <h3 class="event-name">Aperitivo al Tramonto</h3>
+        <p class="event-desc">Il nostro aperitivo della domenica con musica live, drink curati e il Tirreno che si tinge d'arancio. Prenota il tuo tavolo.</p>
+      </div>
+    </div>
+    <div class="event-card reveal reveal-delay-3">
+      <div class="event-img">
+        <img src="img/season2.jpg" alt="GiovedísSIMO">
+      </div>
+      <div class="event-body">
+        <p class="event-tag">Ogni giovedì · Cena + Dopocena</p>
+        <h3 class="event-name">GiovedísSIMO</h3>
+        <p class="event-desc">La cucina creativa della Simo incontra il dopocena al Pescespada. Un giovedì sera che non dimenticherai tanto presto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFO BAR -->
+<div class="info-bar" id="info">
+  <div class="info-item reveal">
+    <p class="info-label">Dove siamo</p>
+    <p class="info-value">Via Ruggiero di Lauria, 9<br>87029 Scalea (CS), Calabria</p>
+    <p class="info-sub">Riviera dei Cedri · Tirreno Calabrese</p>
+  </div>
+  <div class="info-item reveal reveal-delay-1">
+    <p class="info-label">Orari</p>
+    <p class="info-value">Ogni giorno · 08:00 – 24:00</p>
+    <p class="info-sub">In bassa stagione: mer – dom<br>Afterdinner ven & sab</p>
+  </div>
+  <div class="info-item reveal reveal-delay-2">
+    <p class="info-label">Contatti</p>
+    <p class="info-value">+39 338 484 8335</p>
+    <p class="info-sub">DM su Instagram per prenotare<br>@ilpescespada</p>
+  </div>
+</div>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <p class="cta-banner-title">Ci vediamo al tramonto?</p>
+  <p class="cta-banner-sub">Prenota il tuo posto, l'estate non aspetta.</p>
+  <a href="https://www.instagram.com/ilpescespada/" target="_blank" rel="noopener" class="btn-cta-white">
+    Scrivi su Instagram →
+  </a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Il Pescespada Beach Club</div>
+  <ul class="footer-links">
+    <li><a href="https://www.instagram.com/ilpescespada/" target="_blank">Instagram</a></li>
+    <li><a href="https://www.facebook.com/ilpescespadamusicdrinkfun/" target="_blank">Facebook</a></li>
+  </ul>
+  <p>© 2025 Il Pescespada · Scalea, CS</p>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" role="dialog" aria-label="Immagine ingrandita">
+  <button class="lb-close" onclick="closeLb()" aria-label="Chiudi">✕</button>
+  <img class="lb-img" id="lb-img" src="" alt="">
+</div>
+
+<script>
+/* ─── NAV scroll ─── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+/* ─── Hero slideshow ─── */
+const slides = document.querySelectorAll('.hero-slide');
+const dots   = document.querySelectorAll('.hero-dot');
+let current  = 0;
+let autoTimer;
+
+function goSlide(n) {
+  slides[current].classList.remove('active');
+  dots[current].classList.remove('active');
+  current = (n + slides.length) % slides.length;
+  slides[current].classList.add('active');
+  dots[current].classList.add('active');
+  /* restart ken-burns by forcing reflow */
+  const img = slides[current].querySelector('img');
+  img.style.animation = 'none';
+  void img.offsetWidth;
+  img.style.animation = '';
+}
+
+function startAuto() {
+  autoTimer = setInterval(() => goSlide(current + 1), 6000);
+}
+
+dots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    clearInterval(autoTimer);
+    goSlide(+dot.dataset.slide);
+    startAuto();
+  });
+});
+
+startAuto();
+
+/* ─── Parallax ─── */
+const parallaxBg = document.getElementById('parallaxBg');
+window.addEventListener('scroll', () => {
+  if (!parallaxBg) return;
+  const rect = parallaxBg.parentElement.getBoundingClientRect();
+  if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+  const progress = -rect.top / window.innerHeight;
+  parallaxBg.querySelector('img').style.transform = `translateY(${progress * 14}%)`;
+}, { passive: true });
+
+/* ─── Reveal on scroll ─── */
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+revealEls.forEach(el => io.observe(el));
+
+/* ─── Lightbox ─── */
+const lb    = document.getElementById('lb');
+const lbImg = document.getElementById('lb-img');
+
+function openLb(el) {
+  const img = el.querySelector('img');
+  lbImg.src = img.src;
+  lbImg.alt = img.alt;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLb() {
+  lb.classList.remove('open');
+  document.body.style.overflow = '';
+}
+lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+</script>
+</body>
+</html>
